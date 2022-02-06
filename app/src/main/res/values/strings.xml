@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Todo</string>
+    <string name="app_name">Задачи</string>
+    <string name="hint_text">Введите задачу</string>
+    <string name="add_button">Добавить</string>
+    <string name="delete_button">Удалить</string>
+    <string name="toast_add">Задача добавлена!</string>
+    <string name="toast_delete">Задача удалена</string>
 </resources>
