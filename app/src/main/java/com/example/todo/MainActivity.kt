@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         // создаем пустой массив
         todoAdapter = TodoAdapter(mutableListOf())
+
         // байндим через адаптер
         binding.rvTodoList.adapter = todoAdapter
         binding.rvTodoList.layoutManager = LinearLayoutManager(this)

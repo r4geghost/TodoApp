@@ -10,15 +10,11 @@ class TodoAdapter(
     private val todos: MutableList<Todo>
 ) : RecyclerView.Adapter<TodoAdapter.MyHolder>()
 {
-    private lateinit var bindingItem: ItemTodoBinding
-    class MyHolder(
-        itemView: View,
-        private val binding: ItemTodoBinding
-    ) : RecyclerView.ViewHolder(itemView)
+    class MyHolder(val bindingItem: ItemTodoBinding) : RecyclerView.ViewHolder(bindingItem.root)
     {
         fun drawItem(todo: Todo) {
-            binding.tvTodoTitle.text = todo.title
-            binding.cbDone.isChecked = todo.isChecked
+            bindingItem.tvTodoTitle.text = todo.title
+            bindingItem.cbDone.isChecked = todo.isChecked
         }
     }
 
@@ -28,23 +24,25 @@ class TodoAdapter(
     }
 
     fun deleteDoneTodos() {
-        todos.removeAll { it.isChecked }
+        todos.removeAll { todo -> todo.isChecked }
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        bindingItem = ItemTodoBinding.inflate(inflater, parent, false)
-        return MyHolder(bindingItem.root, bindingItem)
+        return MyHolder(ItemTodoBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         val curTodo = todos[position]
-        holder.drawItem(curTodo)
-        bindingItem.cbDone.setOnCheckedChangeListener { _, _ ->
-            curTodo.isChecked = !curTodo.isChecked
+        holder.bindingItem.apply {
+            tvTodoTitle.text = curTodo.title
+            cbDone.isChecked = curTodo.isChecked
+            cbDone.setOnCheckedChangeListener { _, isChecked ->
+                curTodo.isChecked = cbDone.isChecked
+            }
         }
     }
+
     override fun getItemCount(): Int {
         return todos.size
     }
