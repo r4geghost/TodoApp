@@ -11,12 +11,6 @@ class TodoAdapter(
 ) : RecyclerView.Adapter<TodoAdapter.MyHolder>()
 {
     class MyHolder(val bindingItem: ItemTodoBinding) : RecyclerView.ViewHolder(bindingItem.root)
-    {
-        fun drawItem(todo: Todo) {
-            bindingItem.tvTodoTitle.text = todo.title
-            bindingItem.cbDone.isChecked = todo.isChecked
-        }
-    }
 
     fun addTodo(todo: Todo) {
         todos.add(todo)
